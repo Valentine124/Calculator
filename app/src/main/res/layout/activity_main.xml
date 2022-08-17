@@ -6,16 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/screen_input"
         android:layout_width="0dp"
         android:layout_height="80dp"
         android:gravity="end"
+        android:maxLines="1"
         android:text=""
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 
     <TextView
         android:id="@+id/screen_result"
@@ -23,6 +34,7 @@
         android:layout_height="80dp"
         android:gravity="end"
         android:text=""
+        android:maxLines="1"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -173,7 +185,8 @@
                 android:id="@+id/btn_equals"
                 style="@style/calc_buttons_equals"
 
-                android:text="@string/equals" />
+                android:text="@string/equals"
+                android:textColor="#546E7A" />
         </LinearLayout>
     </LinearLayout>
 

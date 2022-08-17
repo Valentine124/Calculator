@@ -1,11 +1,14 @@
 package com.valentine.calculator
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.valentine.calculator.databinding.ActivityMainBinding
 import net.objecthunter.exp4j.ExpressionBuilder
-import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -17,6 +20,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        setSupportActionBar(binding.toolbar2)
+        binding.toolbar2.apply {
+            title = "Calculator"
+        }
 
         model = ViewModelProvider(this)[CalcViewModel::class.java]
 
@@ -132,12 +139,35 @@ class MainActivity : AppCompatActivity() {
             try {
                 val expression = ExpressionBuilder(binding.screenInput.text.toString()).build()
                 val result = expression.evaluate()
+                val longResult = expression.evaluate().toLong()
 
-                model.result = result.toString()
+                if (result == longResult.toDouble()) {
+                    model.result = longResult.toString()
+                } else {
+                    model.result = result.toString()
+                }
+
                 binding.screenResult.text = model.result
+
             } catch (e: Exception) {
                 binding.screenResult.text = getString(R.string.error_message)
             }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.item_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.item_converter -> {
+                startActivity(Intent(this, ConverterActivity::class.java))
+                true
+            }
+            else -> {super.onOptionsItemSelected(item)}
         }
     }
 
